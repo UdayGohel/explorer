@@ -3,16 +3,19 @@ import APIConfig from "../utils/APIConfig";
 import Loader from "../pages/Loader";
 import RepoCard from "./RepoCard";
 import Header from "./Header";
+import filter from "../assets/filter.svg";
+import Filter from "./Filter";
 
 const Home = () => {
   const [data, setData] = useState(null);
-  const [inputText, setInputtext] = useState("");
+  const [inputText, setInputText] = useState("");
+  const [showFilter, setShowFilter] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("stars");
 
   useEffect(() => {
     async function fetchRepo() {
       try {
-        let url =
-          "/search/repositories?q=is:public&sort=stars&order=desc&per_page=9";
+        let url = `/search/repositories?q=is:public&sort=${selectedOption}&order=desc&per_page=9`;
         if (inputText !== "") {
           url += `&q=${inputText}`;
         }
@@ -27,8 +30,11 @@ const Home = () => {
     }
 
     fetchRepo(); // Call the async function immediately
-  }, [inputText]);
+  }, [inputText, selectedOption]);
 
+  const handleFilterChange = (value) => {
+    setSelectedOption(value);
+  };
   return (
     <div className="bg-slate-700 h-screen w-screen overflow-y-auto">
       <Header />
@@ -37,13 +43,22 @@ const Home = () => {
           <h2 className="text-white font-mono font-semibold text-2xl p-2">
             Explore Trending Repositories
           </h2>
-          <input
-            type="text"
-            className="rounded-md p-2"
-            placeholder="Search repositories"
-            value={inputText}
-            onChange={(e) => setInputtext(e.target.value)}
-          />
+          <div className="flex items-center">
+            <input
+              type="text"
+              className="rounded-md p-2 w-64 bg-slate-900 text-white placeholder-white::placeholder"
+              placeholder="Search repositories..."
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+            />
+            <img
+              src={filter}
+              className="h-10 w-10 ml-2 cursor-pointer"
+              alt="filter svg"
+              onClick={() => setShowFilter(!showFilter)}
+            />
+            {showFilter ? <Filter onFilterChange={handleFilterChange} /> : ""}
+          </div>
         </div>
 
         {data ? (

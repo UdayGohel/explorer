@@ -77,16 +77,20 @@ const ViewRepositories = () => {
               <span>Open issues</span>
             </div>
           </div>
-          <div className="p-5 mb-2">
-            {issue.map((i) => (
-              <IssueCard
-                title={i.title}
-                html_url={i.html_url}
-                user={i.user.login}
-                avatar_url={i.user.avatar_url}
-              />
-            ))}
-          </div>
+          {issue ? (
+            <div className="p-5 mb-2">
+              {issue.map((i) => (
+                <IssueCard
+                  title={i.title}
+                  html_url={i.html_url}
+                  user={i.user.login}
+                  avatar_url={i.user.avatar_url}
+                />
+              ))}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </section>
     </>
