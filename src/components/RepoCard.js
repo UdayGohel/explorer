@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const RepoCard = ({ ownerName, repoName, avatarImgUrl, description }) => {
   return (
@@ -19,7 +20,10 @@ const RepoCard = ({ ownerName, repoName, avatarImgUrl, description }) => {
         </div>
         <span className="line-clamp-2">{description}</span>
 
-        <div className="flex justify-between items-center">
+        <Link
+          className="flex justify-between items-center"
+          to={`/repositories/${ownerName}`}
+        >
           <span className="group relative inline-block cursor-pointer text-blue-700">
             View Repo
             <span className="absolute left-0 bottom-0 h-0.5 bg-blue-500 group-hover:w-full transition-width"></span>
@@ -38,7 +42,7 @@ const RepoCard = ({ ownerName, repoName, avatarImgUrl, description }) => {
               d="M9 5l7 7-7 7"
             />
           </svg>
-        </div>
+        </Link>
       </div>
     </div>
   );

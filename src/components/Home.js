@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import APIConfig from "../utils/APIConfig";
-import backgroundImage from "../assets/github.svg";
 import Loader from "../pages/Loader";
 import RepoCard from "./RepoCard";
+import Header from "./Header";
 
 const Home = () => {
   const [data, setData] = useState(null);
@@ -31,14 +31,7 @@ const Home = () => {
 
   return (
     <div className="bg-slate-700 h-screen w-screen overflow-y-auto">
-      <div className="bg-gray-900 p-4 flex justify-between items-center font-serif text-2xl">
-        <h1 className="text-white text-center">React Github Explorer</h1>
-        <img
-          className="h-12 w-12 rounded-full"
-          src={backgroundImage}
-          alt="Github icon"
-        />
-      </div>
+      <Header />
       <section className="p-4">
         <div className="flex justify-between m-2">
           <h2 className="text-white font-mono font-semibold text-2xl p-2">
