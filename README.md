@@ -51,13 +51,13 @@ A React application that allows users to explore trending GitHub repositories. T
    - Documentation: [https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)
 
 2. **npm Packages:**
-   - Navigate to the `explorer` directory and install dependencies using `npm install`.
+   - Navigate to the `github-explorer` directory and install dependencies using `npm install`.
 
 ### Installation
 1. **Clone the Repository:**
 
     ```bash
-    git clone https://github.com/UdayGohel/explorer.git
+    git clone https://github.com/UdayGohel/github-explorer.git
     ```
 2. **Navigate to Project Directory:**
 
