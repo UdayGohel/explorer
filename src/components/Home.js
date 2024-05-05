@@ -114,14 +114,14 @@ const Home = () => {
     <div className="bg-slate-700 h-screen w-screen overflow-y-auto">
       <Header />
       <section className="p-4">
-        <div className="flex justify-between m-2">
-          <h2 className="text-white font-mono font-semibold text-2xl p-2">
+        <div className="flex flex-col justify-between m-2 md:flex-row">
+          <h2 className="text-white font-mono font-semibold text-xl p-2 md:text-2xl">
             Explore Trending Repositories
           </h2>
           <div className="flex items-center">
             <input
               type="text"
-              className="rounded-md p-2 w-64 bg-slate-900 text-white placeholder-white::placeholder"
+              className="rounded-md p-2 w-full md:w-64 bg-slate-900 text-white placeholder-white::placeholder"
               placeholder="Search repositories..."
               value={searchText}
               onChange={(e) => dispatch(setSearchText(e.target.value))}
@@ -132,7 +132,8 @@ const Home = () => {
               alt="filter svg"
               onClick={() => setShowFilter(!showFilter)}
             />
-            {showFilter ? <Filter onFilterChange={handleFilterChange} /> : ""}
+
+            {showFilter && <Filter onFilterChange={handleFilterChange} />}
           </div>
         </div>
 

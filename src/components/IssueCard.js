@@ -1,7 +1,7 @@
 const IssueCard = ({ title, user, html_url, avatar_url }) => {
   return (
     <div className="bg-white shadow-lg rounded-lg p-3 m-3">
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <h3 className="text-lg lg:text-xl font-semibold mb-2">{title}</h3>
       <div className="flex items-center">
         <img
           src={avatar_url}

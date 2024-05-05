@@ -10,9 +10,10 @@ const Filter = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <select
-        className="block appearance-none w-full bg-slate-900 border border-gray-300 text-blue-900 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
+        className="block appearance-none w-full text-sm
+          bg-slate-900 border border-gray-300 text-blue-900 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-700"
         value={sortBy}
         onChange={handleSortByChange}
       >
