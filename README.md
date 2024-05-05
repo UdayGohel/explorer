@@ -1,12 +1,28 @@
-# Getting Started with Create React App
+<p align="center">
+  <h1 align="center">React Github Explorer</h1>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Table Of Contents
 
-In the project directory, you can run:
+- [About the Project](#about-the-project)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Contributing](#contributing)
 
-### `npm start`
+
+## About the Project
+A React application that allows users to explore trending GitHub repositories. The application features a responsive design, custom data table, search functionality, and sorting functionality.
+
+
+## Glimps of our Project
+![Main Page]()
+![Gujarat Map]()
+![Analysis]()
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
