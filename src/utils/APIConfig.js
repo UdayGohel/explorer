@@ -2,12 +2,10 @@ import { baseUrl } from "../services/api";
 
 const APIConfig = async ({ data, url, method, headers, fetchOptions }) => {
   try {
-    // Validate input properties
     if (!url || !method) {
       throw new Error("Missing required properties: url and method");
     }
 
-    // Ensure `data` is an object (optional)
     if (data && typeof data !== "object") {
       throw new Error("Invalid data prop: must be an object");
     }
@@ -45,17 +43,13 @@ const APIConfig = async ({ data, url, method, headers, fetchOptions }) => {
         console.error("Error parsing JSON error response:", jsonError);
       }
 
-      // Throw a more informative error
-      //   throw new Error(
-      //     `API request failed with status ${response.status}: ${errorMessage}`
-      //   );
-      throw new Error(errorMessage);
+      throw new Error(
+        `API request failed with status ${response.status}: ${errorMessage}`
+      );
     }
 
-    // Return the parsed response data
     return await response.json();
   } catch (error) {
-    // Log the error with additional context
     console.error(
       "Error occurred in APIConfig:",
       { url, method, error },

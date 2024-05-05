@@ -4,6 +4,7 @@ const initialValues = {
   pageNumber: 1,
   searchText: "",
   filter: "stars",
+  sortType: "desc",
 };
 
 const userSlice = createSlice({
@@ -19,7 +20,11 @@ const userSlice = createSlice({
     setFilter(state, action) {
       state.filter = action.payload;
     },
+    setSortType(state, action) {
+      state.sortType = action.payload;
+    },
   },
 });
-export const { setPageNumber, setSearchText, setFilter } = userSlice.actions;
+export const { setPageNumber, setSearchText, setFilter, setSortType } =
+  userSlice.actions;
 export default userSlice.reducer;

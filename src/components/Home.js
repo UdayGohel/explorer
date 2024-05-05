@@ -6,7 +6,12 @@ import Header from "./Header";
 import filterImage from "../assets/filter.svg";
 import Filter from "./Filter";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilter, setPageNumber, setSearchText } from "../store/UserState";
+import {
+  setFilter,
+  setPageNumber,
+  setSearchText,
+  setSortType,
+} from "../store/UserState";
 
 const Home = () => {
   const [data, setData] = useState(null);
@@ -16,18 +21,18 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const userState = useSelector((state) => state.user);
-  const { pageNumber, searchText, filter } = userState;
+  const { pageNumber, searchText, filter, sortType } = userState;
 
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
       fetchRepo();
     }, 500);
     return () => clearTimeout(debounceTimeout);
-  }, [searchText, filter, pageNumber]);
+  }, [searchText, filter, pageNumber, sortType]);
 
   const fetchRepo = async () => {
     try {
-      let url = `/search/repositories?q=stars:>1&sort=${filter}&order=desc&per_page=9&page=${pageNumber}`;
+      let url = `/search/repositories?q=stars:>1&sort=${filter}&order=${sortType}&per_page=9&page=${pageNumber}`;
       if (searchText !== "") {
         url += `&q=${searchText}`;
       }
@@ -41,7 +46,21 @@ const Home = () => {
       setData(res);
       setTotalPages(Math.ceil(res.total_count / 9));
     } catch (error) {
-      console.error("Error fetching data:", error);
+      if (error.message.includes("Network Error")) {
+        setError(
+          "Network Error: Couldn't connect to server. Please check your internet connection and try again."
+        );
+      } else if (error.message.includes("API Rate Limit Exceeded")) {
+        setError("API Rate Limit Exceeded: Please try again later.");
+      } else if (error.message.includes("Internal Server Error")) {
+        setError(
+          "Internal Server Error: Something went wrong on our servers. Please try again later."
+        );
+      } else if (error.message.includes("Error code: ")) {
+        setError("An unexpected error occurred. Please try again later.");
+      } else {
+        setError("Oops! Something went wrong. Please try again later.");
+      }
     }
   };
 
@@ -49,8 +68,9 @@ const Home = () => {
     dispatch(setPageNumber(page));
   };
 
-  const handleFilterChange = (value) => {
-    dispatch(setFilter(value));
+  const handleFilterChange = (sortOrder, sortBy) => {
+    dispatch(setFilter(sortOrder));
+    dispatch(setSortType(sortBy));
     dispatch(setPageNumber(1));
   };
 
@@ -147,7 +167,11 @@ const Home = () => {
               alt="filter svg"
               onClick={() => setShowFilter(!showFilter)}
             />
-
+            <div className="hidden md:block">
+              {showFilter && <Filter onFilterChange={handleFilterChange} />}
+            </div>
+          </div>
+          <div className="md:hidden">
             {showFilter && <Filter onFilterChange={handleFilterChange} />}
           </div>
         </div>
