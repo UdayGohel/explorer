@@ -12,7 +12,7 @@
   - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Contributing](#contributing)
+- [Developed By](#developed-by)
 
 
 ## About the Project
@@ -20,67 +20,100 @@ A React application that allows users to explore trending GitHub repositories. T
 
 
 ## Glimps of our Project
-![Main Page]()
-![Gujarat Map]()
-![Analysis]()
+![Main Page](https://github.com/UdayGohel/explorer/assets/114012274/1cc6feb3-5043-4e5b-afad-e973bfb3cf4d)
+![Repositories Page](https://github.com/UdayGohel/explorer/assets/114012274/cdb0d56f-460c-4d8a-b98e-832ca6853f60)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Built With
 
-### `npm test`
+- Frontend: [React](https://reactjs.org/)
+- Library:
+  - [Tailwind CSS](https://tailwindcss.com/) for general CSS
+  - [React-redux](https://react-redux.js.org/) for state management
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### General:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Git:**
+   - Make sure Git is installed on your system. You can download it from [here](https://git-scm.com/).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Node.js and npm:**
+   - Install npm from [https://nodejs.org/](https://nodejs.org/).
+   
 
-### `npm run eject`
+#### Frontend:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **React:**
+   - Ensure you have a basic understanding of React.
+   - Documentation: [https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **npm Packages:**
+   - Navigate to the `github-explorer` directory and install dependencies using `npm install`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Installation
+1. **Clone the Repository:**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    ```bash
+    git clone https://github.com/UdayGohel/github-explorer.git
+    ```
+2. **Navigate to Project Directory:**
 
-## Learn More
+    ```bash
+    cd github-explorer
+    ```
+3. **Install Dependencies for React JS:**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    ```bash
+    npm install
+    ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. **Run the Application for Front-end:**
 
-### Code Splitting
+    ```bash
+    npm start
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Usage
 
-### Analyzing the Bundle Size
+### Browsing Trending Repositories:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Discover popular repositories across different programming languages.
+### Deep-Dives into Specific Repositories:
 
-### Making a Progressive Web App
+- Click on a repository to view its basic details like description, stars, forks, and owner.
+### Exploring Top Issues:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- View the top 5 reported issues associated with a repository.
 
-### Advanced Configuration
+## Features
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### Responsive design:
 
-### Deployment
+- The application adjusts its layout to fit different screen sizes
+#### Custom data table:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- The application displays trending repositories in a custom data table that allows for sorting and searching
+#### Search functionality: 
 
-### `npm run build` fails to minify
+- Users can search for repositories by name or description or topics.
+#### Sorting functionality:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Users can sort repositories by stars, forks, or updated.
+#### Error Handling:
+
+- Displaying user-friendly error messages.
+#### Rate Limiting:
+
+- If the Github API has rate limits, implement mechanisms to handle them gracefully.
+#### Pagination: 
+
+- Implement pagination to handle a large number of repositories efficiently.
+#### Loading State: 
+
+- Show a loading indicator while fetching data to improve user experience.
+
+### Developed By
+- [_Uday Gohel_](https://github.com/UdayGohel)
