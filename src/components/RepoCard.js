@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const RepoCard = ({ ownerName, repoName, avatarImgUrl, description }) => {
   return (
     <div className="flex rounded-lg shadow-md bg-white">
-      <div className="flex justify-center items-center w-[50%]">
+      <div className="flex justify-center items-center w-1/2 m-2 lg:m-0">
         <img
           className="w-28 h-28 object-cover rounded-full"
           src={avatarImgUrl}
