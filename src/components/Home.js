@@ -12,19 +12,22 @@ const Home = () => {
   const [data, setData] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
   const [totalPages, setTotalPages] = useState(null);
-
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
 
   const userState = useSelector((state) => state.user);
   const { pageNumber, searchText, filter } = userState;
 
   useEffect(() => {
-    fetchRepo();
+    const debounceTimeout = setTimeout(() => {
+      fetchRepo();
+    }, 500);
+    return () => clearTimeout(debounceTimeout);
   }, [searchText, filter, pageNumber]);
 
   const fetchRepo = async () => {
     try {
-      let url = `/search/repositories?q=is:public&sort=${filter}&order=desc&per_page=9&page=${pageNumber}`;
+      let url = `/search/repositories?q=stars:>1&sort=${filter}&order=desc&per_page=9&page=${pageNumber}`;
       if (searchText !== "") {
         url += `&q=${searchText}`;
       }
@@ -32,12 +35,16 @@ const Home = () => {
         url: url,
         method: "GET",
       });
+      if (res.total_count == 0) {
+        setError("Oops! No repositories found matching your input.");
+      }
       setData(res);
       setTotalPages(Math.ceil(res.total_count / 9));
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+
   const handlePageChange = (page) => {
     dispatch(setPageNumber(page));
   };
@@ -110,9 +117,17 @@ const Home = () => {
     return pages;
   };
 
-  return (
+  if (error !== "") {
     <div className="bg-slate-700 h-screen w-screen overflow-y-auto">
       <Header />
+      {error}
+    </div>;
+  }
+
+  return (
+    <div className="bg-gradient-to-r from-slate-800 to-slate-700 h-screen w-screen overflow-y-auto">
+      <Header />
+
       <section className="p-4">
         <div className="flex flex-col justify-between m-2 md:flex-row">
           <h2 className="text-white font-mono font-semibold text-lg p-2 md:text-2xl">
@@ -137,6 +152,13 @@ const Home = () => {
           </div>
         </div>
 
+        <div className="flex justify-center items-center">
+          {error !== "" && (
+            <div className="p-3 bg-red-600 font-semibold text-white font-serif rounded-md mt-5">
+              {error}
+            </div>
+          )}
+        </div>
         {data ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
             {data.items &&
