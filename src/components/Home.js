@@ -3,38 +3,113 @@ import APIConfig from "../utils/APIConfig";
 import Loader from "../pages/Loader";
 import RepoCard from "./RepoCard";
 import Header from "./Header";
-import filter from "../assets/filter.svg";
+import filterImage from "../assets/filter.svg";
 import Filter from "./Filter";
+import { useDispatch, useSelector } from "react-redux";
+import { setFilter, setPageNumber, setSearchText } from "../store/UserState";
 
 const Home = () => {
   const [data, setData] = useState(null);
-  const [inputText, setInputText] = useState("");
   const [showFilter, setShowFilter] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("stars");
+  const [totalPages, setTotalPages] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const userState = useSelector((state) => state.user);
+  const { pageNumber, searchText, filter } = userState;
 
   useEffect(() => {
-    async function fetchRepo() {
-      try {
-        let url = `/search/repositories?q=is:public&sort=${selectedOption}&order=desc&per_page=9`;
-        if (inputText !== "") {
-          url += `&q=${inputText}`;
-        }
-        const res = await APIConfig({
-          url: url,
-          method: "GET",
-        });
-        setData(res);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    fetchRepo();
+  }, [searchText, filter, pageNumber]);
+
+  const fetchRepo = async () => {
+    try {
+      let url = `/search/repositories?q=is:public&sort=${filter}&order=desc&per_page=9&page=${pageNumber}`;
+      if (searchText !== "") {
+        url += `&q=${searchText}`;
+      }
+      const res = await APIConfig({
+        url: url,
+        method: "GET",
+      });
+      setData(res);
+      setTotalPages(Math.ceil(res.total_count / 9));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const handlePageChange = (page) => {
+    dispatch(setPageNumber(page));
+  };
+
+  const handleFilterChange = (value) => {
+    dispatch(setFilter(value));
+    dispatch(setPageNumber(1));
+  };
+
+  const renderPagination = () => {
+    const visiblePages = 3; // Number of visible page numbers
+    const pages = [];
+    let startPage = pageNumber - Math.floor(visiblePages / 2);
+    if (startPage < 1) {
+      startPage = 1;
+    }
+    let endPage = startPage + visiblePages - 1;
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = endPage - visiblePages + 1;
+      if (startPage < 1) {
+        startPage = 1;
       }
     }
 
-    fetchRepo(); // Call the async function immediately
-  }, [inputText, selectedOption]);
+    if (startPage > 1) {
+      pages.push(
+        <button
+          key={1}
+          className="px-3 py-1 mx-1 rounded bg-gray-300"
+          onClick={() => handlePageChange(1)}
+        >
+          1
+        </button>
+      );
+      if (startPage > 2) {
+        pages.push(<span key="startEllipsis">...</span>);
+      }
+    }
 
-  const handleFilterChange = (value) => {
-    setSelectedOption(value);
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <button
+          key={i}
+          className={`px-3 py-1 mx-1 rounded ${
+            pageNumber === i ? "bg-blue-500 text-white" : "bg-gray-300"
+          }`}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        pages.push(<span key="endEllipsis">...</span>);
+      }
+      pages.push(
+        <button
+          key={totalPages}
+          className="px-3 py-1 mx-1 rounded bg-gray-300"
+          onClick={() => handlePageChange(totalPages)}
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
+    return pages;
   };
+
   return (
     <div className="bg-slate-700 h-screen w-screen overflow-y-auto">
       <Header />
@@ -48,11 +123,11 @@ const Home = () => {
               type="text"
               className="rounded-md p-2 w-64 bg-slate-900 text-white placeholder-white::placeholder"
               placeholder="Search repositories..."
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
+              value={searchText}
+              onChange={(e) => dispatch(setSearchText(e.target.value))}
             />
             <img
-              src={filter}
+              src={filterImage}
               className="h-10 w-10 ml-2 cursor-pointer"
               alt="filter svg"
               onClick={() => setShowFilter(!showFilter)}
@@ -66,7 +141,7 @@ const Home = () => {
             {data.items &&
               data.items.map((repo, index) => (
                 <RepoCard
-                  key={index}
+                  key={repo.id}
                   ownerName={repo.full_name}
                   repoName={repo.name}
                   avatarImgUrl={repo.owner.avatar_url}
@@ -77,6 +152,8 @@ const Home = () => {
         ) : (
           <Loader />
         )}
+
+        <div className="flex justify-center mt-4">{renderPagination()}</div>
       </section>
     </div>
   );

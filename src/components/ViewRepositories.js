@@ -7,10 +7,11 @@ import IssueCard from "./IssueCard";
 
 const ViewRepositories = () => {
   const { repoName, owner } = useParams();
+  console.log(owner);
   const [repo, setRepo] = useState(null);
   const [issue, setIssue] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [repoLoading, setRepoLoading] = useState(true);
   useEffect(() => {
     const fetchRepo = async () => {
       try {
@@ -19,6 +20,7 @@ const ViewRepositories = () => {
           method: "GET",
         });
         setRepo(res);
+        setRepoLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -39,11 +41,13 @@ const ViewRepositories = () => {
     fetchIssue();
   }, [repoName, owner]);
 
-  if (loading) {
+  if (loading && repoLoading) {
     return (
       <>
         <Header />
-        <Loader />
+        <section className="bg-slate-700 h-screen flex justify-center">
+          <Loader />
+        </section>
       </>
     );
   }
@@ -81,6 +85,7 @@ const ViewRepositories = () => {
             <div className="p-5 mb-2">
               {issue.map((i) => (
                 <IssueCard
+                  key={i.id}
                   title={i.title}
                   html_url={i.html_url}
                   user={i.user.login}
