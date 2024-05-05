@@ -150,7 +150,7 @@ const Home = () => {
 
       <section className="p-4">
         <div className="flex flex-col justify-between m-2 md:flex-row">
-          <h2 className="text-white font-mono font-semibold text-lg p-2 md:text-2xl">
+          <h2 className="text-white font-mono font-semibold text-base p-2 md:text-2xl">
             Explore Trending Repositories
           </h2>
           <div className="flex items-center">
