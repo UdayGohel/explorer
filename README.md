@@ -62,7 +62,7 @@ A React application that allows users to explore trending GitHub repositories. T
 2. **Navigate to Project Directory:**
 
     ```bash
-    cd explorer
+    cd github-explorer
     ```
 3. **Install Dependencies for React JS:**
 
