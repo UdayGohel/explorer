@@ -2,18 +2,18 @@ import { useState } from "react";
 
 const Filter = ({ onFilterChange }) => {
   const [sortBy, setSortBy] = useState("stars");
-  const [sortOrder, setSortOrder] = useState("desc"); // Initialize sortOrder state
+  const [sortOrder, setSortOrder] = useState("desc");
 
   const handleSortByChange = (e) => {
     const value = e.target.value;
     setSortBy(value);
-    onFilterChange(value, sortOrder); // Pass both sortBy and sortOrder to onFilterChange
+    onFilterChange(value, sortOrder);
   };
 
   const handleSortOrderChange = (e) => {
     const value = e.target.value;
-    setSortOrder(value); // Update sortOrder state
-    onFilterChange(sortBy, value); // Pass both sortBy and sortOrder to onFilterChange
+    setSortOrder(value);
+    onFilterChange(sortBy, value);
   };
 
   return (

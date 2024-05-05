@@ -51,10 +51,17 @@ const ViewRepositories = () => {
       </>
     );
   }
+  const formatCount = (count) => {
+    if (count >= 1000) {
+      return `${(count / 1000).toFixed(1)}k`;
+    } else {
+      return count.toString();
+    }
+  };
   return (
     <>
       <Header />
-      <section className="bg-slate-700 h-screen lg:h-full flex justify-center">
+      <section className="bg-slate-700 h-full lg:h-full flex justify-center">
         {repo && (
           <div className="bg-gray-200 shadow-lg rounded-lg md:w-1/2 w-full m-5">
             <div className="flex items-center justify-start m-5 gap-5">
@@ -63,33 +70,39 @@ const ViewRepositories = () => {
                 alt="owner img"
                 className="rounded-full h-28 w-28 object-cover"
               />
-              <div>
+              <a
+                href={repo.html_url}
+                target="_blank"
+                className="text-black  hover:text-blue-600"
+              >
                 <h2 className="text-lg lg:text-3xl  font-semibold">
                   {repo.full_name}
                 </h2>
                 <p className="text-gray-600">{repo.description}</p>
-              </div>
+              </a>
             </div>
-            <div className="flex justify-between items-center m-4 font-semibold">
+            <div className="flex justify-between items-center m-5 font-semibold">
               <div className="flex flex-col items-center">
                 <h5 className="text-2xl lg:text-3xl">
-                  {repo.stargazers_count}
+                  {formatCount(repo.stargazers_count)}
                 </h5>
                 <span>Stars</span>
               </div>
               <div className="flex flex-col items-center">
-                <h5 className="text-2xl lg:text-3xl">{repo.forks}</h5>
+                <h5 className="text-2xl lg:text-3xl">
+                  {formatCount(repo.forks)}
+                </h5>
                 <span>Forks</span>
               </div>
               <div className="flex flex-col items-center">
                 <h5 className="text-2xl lg:text-3xl">
-                  {repo.open_issues_count}
+                  {formatCount(repo.open_issues_count)}
                 </h5>
                 <span>Open issues</span>
               </div>
             </div>
             {issue ? (
-              <div className="p-5 mb-2">
+              <div className="px-5 mb-2">
                 {issue.map((i) => (
                   <IssueCard
                     key={i.id}

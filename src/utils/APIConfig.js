@@ -10,7 +10,6 @@ const APIConfig = async ({ data, url, method, headers, fetchOptions }) => {
       throw new Error("Invalid data prop: must be an object");
     }
 
-    // Merge headers with caution
     const defaultHeaders = { "Content-Type": "application/json" };
     const mergedHeaders = { ...defaultHeaders, ...headers };
     if (mergedHeaders["Content-Type"] !== "application/json" && data) {
@@ -19,7 +18,6 @@ const APIConfig = async ({ data, url, method, headers, fetchOptions }) => {
       );
     }
 
-    // Construct the fetch request with error handling
     const response = await fetch(`${baseUrl}${url}`, {
       method,
       headers: new Headers(mergedHeaders),
@@ -29,11 +27,9 @@ const APIConfig = async ({ data, url, method, headers, fetchOptions }) => {
       throw new Error(`Error fetching data from ${url}: ${error}`);
     });
 
-    // Check for successful response
     if (!response.ok) {
       let errorMessage = "Something went wrong!";
 
-      // Attempt to parse JSON error response
       try {
         const errorData = await response.json();
         if (errorData && errorData.message) {
@@ -56,7 +52,6 @@ const APIConfig = async ({ data, url, method, headers, fetchOptions }) => {
       error.stack
     );
 
-    // Re-throw the error to allow for higher-level handling
     throw error;
   }
 };
